@@ -1,0 +1,39 @@
+{
+  "pages": [
+    {
+      "id": "rg",
+      "name": "RG Form",
+      "component": "RgFormPage"
+    },
+    {
+      "id": "kv",
+      "name": "KV Form",
+      "component": "KvFormPage"
+    },
+    {
+      "id": "vm",
+      "name": "VM Form",
+      "component": "VmFormPage"
+    },
+    {
+      "id": "sqlmi",
+      "name": "SqlMI Form",
+      "component": "SqlMIFormPage"
+    },
+    {
+      "id": "pgsql",
+      "name": "Postgres Form",
+      "component": "PostgreSqlFormPage"
+    },
+    {
+      "id": "LB Form",
+      "name": "LB Form",
+      "component": "LbFormPage"
+    },
+    {
+      "id": "pipeline",
+      "name": "Pipeline",
+      "component": "PipelinePage"
+    }
+  ]
+}

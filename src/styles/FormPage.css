@@ -1,0 +1,20 @@
+.button-panel {
+  max-width: 800px;
+  margin: auto;
+  margin-top: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+button.submit-button {
+  padding: 15px 100px; 
+  font-size: 20px; 
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  background-color: #008cba;
+  color: #fff;
+  margin-bottom: 10px;
+}

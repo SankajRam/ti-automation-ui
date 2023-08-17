@@ -1,0 +1,15 @@
+{
+  "pageName": "rg",
+  "formLimit": 50,
+  "postFormRoute": "/save-resource/rg/",
+  "formsData": {
+    "rgFormData": {
+      "name": "rg",
+      "fields": [
+        { "name": "name", "label": "Name/ Key", "type": "input" },
+        { "name": "region", "label": "Region", "type": "input", "placeholder": "optional"}
+      ],
+      "submitRef": {}
+    }
+  }
+}

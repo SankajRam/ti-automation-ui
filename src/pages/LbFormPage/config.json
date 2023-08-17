@@ -1,0 +1,23 @@
+{
+  "pageName": "lb",
+  "formLimit": 10,
+  "postFormRoute": "/make-resource/lb/",
+  "getKeysRoute" : "/rgkv/",
+  "formsData": {
+    "lbFormData": {
+      "name": "lb",
+      "fields": [
+        { "name": "name", "label": "Name", "type": "input" },
+        { "name": "resource_group_key", "label": "RG Key", "type": "combobox", "selectionList": [] },
+        { "name": "sku_name", "label": "SKU", "type": "select", "selectionList": ["standard", "gateway","basic"] },
+        { "name": "nic_vnet_key", "label": "NIC VNet Key", "type": "input" },
+        { "name": "nic_subnet_key", "label": "NIC Subnet Key", "type": "input" },
+        { "name": "frontend_ip_address_name", "label": "Frontend IP Name", "type": "input" },
+        { "name": "frontend_ip_address_allocation", "label": "frontend IP Address", "type": "select", "selectionList": ["Static", "Dynamic"] },
+        { "name": "nic_private_ip_address", "label": "NIC Prv IP Addr", "type": "input", "placeholder":"127.0.0.1" },
+        { "name": "availability_zone", "label": "Availability Zone", "type": "selecr", "selectionList":["No Zone", "Zone-redundant", "1", "2","3" ]}
+      ],
+      "submitRef": {}
+    }
+  }
+} 

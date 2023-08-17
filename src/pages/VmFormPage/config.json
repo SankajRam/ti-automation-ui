@@ -1,0 +1,55 @@
+{
+  "pageName": "vm",
+  "formLimit": 50,
+  "postFormRoute": "/make-resource/vm/",
+  "getKeysRoute" : "/rgkv/",
+  "formsData": {
+    "winVmFormData": {
+    "name": "windows",
+    "fields": [
+      { "name": "name", "label": "Name/ Key", "type": "input" },
+      { "name": "resource_group_key", "label": "RG Key", "type": "combobox", "selectionList": [] },
+      { "name": "os", "label": "OS", "type": "input", "isHidden": true, "defaultValue": "windows" },
+      { "name": "nic_lz_key", "label": "NIC LZ Key", "type": "input" },
+      { "name": "nic_vnet_key", "label": "NIC VNet Key", "type": "input" },
+      { "name": "nic_subnet_key", "label": "NIC Subnet Key", "type": "input" },
+      { "name": "nic_private_ip_address_allocation", "label": "NIC Prv IP Allocation", "type": "select", "selectionList": ["Static", "Dynamic"] },
+      { "name": "nic_private_ip_address", "label": "NIC Prv IP Addr", "type": "input", "placeholder":"127.0.0.1" },
+      { "name": "size", "label": "VM Size", "type": "select", "selectionList": ["Standard_A1_v2", "Standard_D1_v2", "Standard_D4s_v3", "Standard_E2_v3", "Standard_G1", "Standard_F2"] },
+      { "name": "zone", "label": "Zone", "type": "select", "selectionList": ["1", "2", "3"] },
+      { "name": "license_type", "label": "OS License", "type": "select", "selectionList": ["None", "Windows_Client", "Windows_Server"] },
+      { "name": "os_publisher", "label": "OS Publisher", "type": "input", "isHidden": true, "defaultValue": "MicrosoftWindowsServer" },
+      { "name": "os_offer", "label": "OS Offer", "type": "input", "isHidden": true, "defaultValue": "WindowsServer" },
+      { "name": "os_sku", "label": "OS SKU", "type": "input", "isHidden": true, "defaultValue": "2019-Datacenter" },
+      { "name": "os_version", "label": "OS Version", "type": "input", "isHidden": true, "defaultValue": "latest" },
+      { "name": "tags", "label": "Tags", "type": "input", "placeholder":"key1:value1; key2:value2" }
+    ],
+    "submitRef": {}
+    },
+    "linVmFormData": {
+    "name": "linux",
+    "fields": [
+      { "name": "name", "label": "Name/ Key", "type": "input" },
+      { "name": "resource_group_key", "label": "RG Key", "type": "combobox", "selectionList": "$getDataWithKey('rg')" },
+      { "name": "os", "label": "OS", "type": "input", "isHidden": true, "defaultValue": "linux" },
+      { "name": "nic_lz_key", "label": "NIC LZ Key", "type": "input" },
+      { "name": "nic_vnet_key", "label": "NIC VNet Key", "type": "input" },
+      { "name": "nic_subnet_key", "label": "NIC Subnet Key", "type": "input" },
+      { "name": "nic_private_ip_address_allocation", "label": "NIC Prv IP Allocation", "type": "select", "selectionList": ["Static", "Dynamic"] },
+      { "name": "nic_private_ip_address", "label": "NIC Prv IP Addr", "type": "input", "placeholder":"127.0.0.1" },
+      { "name": "size", "label": "VM Size", "type": "select", "selectionList": ["Standard_A1_v2", "Standard_D1_v2", "Standard_D4s_v3", "Standard_E2_v3", "Standard_G1", "Standard_F2"] },
+      { "name": "zone", "label": "Zone", "type": "select", "selectionList": ["1", "2", "3"] },
+      { "name": "admin_username", "label": "Admin Username", "type": "input" },
+      { "name": "admin_lz_key", "label": "Admin LZ Key", "type": "input" },
+      { "name": "admin_keyvault_key", "label": "Admin KV Key", "type": "input" },
+      { "name": "admin_secret_name", "label": "Admin Secret Name", "type": "input" },
+      { "name": "os_publisher", "label": "OS Publisher", "type": "input" },
+      { "name": "os_offer", "label": "OS Offer", "type": "input" },
+      { "name": "os_sku", "label": "OS SKU", "type": "input" },
+      { "name": "os_version", "label": "OS Version", "type": "input" },
+      { "name": "tags", "label": "Tags", "type": "input", "placeholder":"key1:value1; key2:value2" }
+    ],
+    "submitRef": {}
+    }
+  }
+}

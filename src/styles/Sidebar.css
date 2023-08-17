@@ -1,0 +1,79 @@
+.sidebar.collapsed {
+  width: 60px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.sidebar li {
+  margin-bottom: 10px;
+}
+
+.sidebar button {
+  text-decoration: none;
+  color: #333;
+  padding: 8px 12px;
+  font-size: 16px;
+  font-weight: bold;
+  border-radius: 4px;
+  transition: background-color 0.3s ease;
+  user-select: none;
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+
+.sidebar button:hover {
+  background-color: #ddd;
+}
+
+.sidebar button.active {
+  background-color: #ccc;
+}
+
+.sidebar .toggle-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  cursor: pointer;
+  font-size: 20px;
+  color: #333;
+  background-color: transparent;
+  border: none;
+  transition: transform 0.3s ease;
+}
+
+.sidebar.collapsed .toggle-button {
+  justify-content: flex-end;
+}
+
+.sidebar.collapsed .toggle-button .icon-collapse {
+  transform: rotate(0deg);
+}
+
+.sidebar.collapsed .toggle-button .icon-expand {
+  transform: rotate(0deg);
+}
+
+.sidebar .toggle-button:focus {
+  outline: none;
+}
+
+.sidebar ul,
+.sidebar li,
+.sidebar button {
+  transition: opacity 0.3s ease;
+}
+
+.sidebar.collapsed ul,
+.sidebar.collapsed li,
+.sidebar.collapsed button {
+  opacity: 0;
+  pointer-events: none;
+}

@@ -1,0 +1,13 @@
+{
+  "pipelineURL": "https://bamboo.dev.aws.singtel.com",
+  "pipelines": [
+    {
+      "projectKey": "AZPIPE",
+      "buildKey": "L2TISBWEN"
+    },
+    {
+      "projectKey": "AZPIPE",
+      "buildKey": "L2CORPITDEV"
+    }
+  ]
+}

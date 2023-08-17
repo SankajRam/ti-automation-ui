@@ -1,0 +1,22 @@
+.settings {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+  background-color: #f5f5f5;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.settings-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.settings-field {
+  margin-bottom: 20px;
+}
+
+.settings-label {
+  margin-bottom: 10px;
+}

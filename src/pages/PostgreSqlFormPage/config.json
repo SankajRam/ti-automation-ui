@@ -1,0 +1,27 @@
+{
+  "pageName": "postgresql",
+  "formLimit": 50,
+  "postFormRoute": "/make-resource/pgdb/",
+  "getKeysRoute" : "/rgkv/",
+  "formsData": {
+    "pgsqlFormData": {
+      "name": "pgsql",
+      "fields": [
+        { "name": "name", "label": "PostgreSQL Name/ Key", "type": "input" },
+        { "name": "resource_group_key", "label": "RG Key", "type": "combobox", "selectionList": [] },
+        { "name": "region", "label": "Region", "type": "input", "isHidden": true, "defaultValue": "southeastasia" },
+        { "name": "version", "label": "Version", "type": "select", "selectionList": ["9.5", "9.6", "10.0", "10.2", "11"] },
+        { "name": "sku_name", "label": "SKU", "type": "combobox", "selectionList": ["GP_Gen5_2", "GP_Gen5_4", "GP_Gen5_6", "GP_Gen5_8", "BC_Gen5_4", "BC_Gen5_6", "BC_Gen5_8", "BC_Gen5_10"] },
+        { "name": "storage_mb", "label": "Max Storage (MB)", "type": "input" },
+        { "name": "zone", "label": "Zone", "type": "select", "selectionList": ["1", "2", "3"] },
+        { "name": "vnet_lz_key", "label": "LZ Key", "type": "input" },
+        { "name": "vnet_key", "label": "VNet Key", "type": "input" },
+        { "name": "vnet_subnet_key", "label": "Subnet Key", "type": "input" },
+        { "name": "private_dns_zone_key", "label": "Private DNS Zone Key", "type": "input" },
+        { "name": "private_dns_zone_lz_key", "label": "Private DNS Zone LZ Key", "type": "input" },
+        { "name": "db_name", "label": "DB Name/ Key", "type": "input" }
+      ],
+      "submitRef": {}
+    }
+  }
+}

@@ -1,0 +1,200 @@
+---
+version: 1
+plan:
+  project-key: TI
+  key: AUTOUI
+  name: ti-automation-ui
+
+stages:
+  - UI Build:
+      manual: false
+      final: false
+      jobs:
+        - Build Job
+
+Build Job:
+  key: JOB1
+  tasks:
+    - clean
+    - checkout:
+        force-clean-build: 'true'
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            #!/bin/bash
+            echo "Setup workspace..."
+            ACR_URL=${bamboo.acr.dev.url}
+            IMAGE="$ACR_URL/tiauto/ui:${bamboo.buildNumber}"
+            chmod 777 ./ti-automation-ui/*.*
+            ls -lart ./ti-automation-ui/
+            cd ti-automation-ui/
+            docker build -t $IMAGE .
+            docker login -u ${bamboo.acr.repo.username} -p ${bamboo.acr.repo.secret} $ACR_URL
+            docker push $IMAGE
+            docker logout $ACR_URL
+            docker rmi $IMAGE
+        description: docker build and push image to acr
+        argument: plan ${bamboo.portfolio} ${bamboo.application} ${bamboo.target} ${bamboo.instance}
+        environment: BIT_ID="${bamboo.bitbucket.secret}" MSI_ID="${bamboo.layer3.msi.secret}" TF_VAR_pipeline_level=level3
+  requirements:
+    - system.platform.azure: lin-dev
+
+branches:
+  create: manually
+  delete: never
+  link-to-jira: true
+
+notifications:
+  - events:
+      - plan-completed
+    recipients:
+      - users: [ "raja.kethamreddy","wen.tian", "minhein.aung", "yingchong.mok" ]
+
+---
+version: 1
+plan:
+  key: TI-AUTOUI
+plan-permissions:
+  - users: [ "yeowweng.liow","wen.tian", "raja.kethamreddy", "minhein.aung", "yingchong.mok" ]
+    permissions:
+      - view
+      - edit
+      - build
+      - clone
+      - admin
+  - groups:
+      - bamboo-project-leads
+    permissions:
+      - view
+      - edit
+      - build
+
+---
+version: 1
+deployment:
+  name: TIAUTO-Pipeline
+  source-plan: TI-AUTOUI
+release-naming:
+  next-version-name: ${bamboo.buildNumber}
+  applies-to-branches: true
+  auto-increment: false
+  auto-increment-variables: []
+environments:
+  - DEV Deployment
+DEV Deployment:
+  triggers: &id001 []
+  tasks:
+    - clean
+    - checkout:
+        repository: strategic-templates-route-https
+        force-clean-build: 'false'
+        description: Checkout openshift TI template
+    - checkout:
+        repository: ti-ocp-environment-repo
+        path: ${bamboo.resourceSize}/ocp
+        force-clean-build: 'false'
+        description: checkout OCP repo
+    - checkout:
+        repository: customer-care-service-co-infra
+        path: ${bamboo.resourceSize}/config
+        force-clean-build: 'false'
+        description: checkout infra repo
+    - any-task:
+        plugin-key: org.gaptap.bamboo.yaml.yaml-variables-loader:yaml-loader-plugin
+        configuration:
+          variableType: job
+          yaml_file: ${bamboo.resourceSize}//ocp/clusters.yml
+        description: load Cluster details
+    - inject-variables:
+        file: ${bamboo.resourceSize}/config/${bamboo.env}/blue.env
+        scope: LOCAL
+        namespace: inject
+        description: Project Variables load
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            #!/bin/bash
+
+            cp ../../"${bamboo_env}"-param.env .
+
+            oc login --token="${bamboo_deployment_secret_token}" "${bamboo_${bamboo.k8name}_admin_api_url}" --insecure-skip-tls-verify
+        working-dir: ${bamboo.resourceSize}
+        description: ocp login
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            #!/bin/sh
+            VERSION=$(echo "${bamboo_deploy_version}"|sed 's/\./-/g')
+            echo $VERSION
+            ls -lart
+
+            oc project "${bamboo_inject_PROJ}"
+
+            oc create configmap "${bamboo_inject_APP}-${bamboo_inject_ENV}-${bamboo_inject_TYPE}-config" --from-file=config/"${bamboo_inject_ENV}"/ConfigFiles/"${bamboo_inject_TYPE}"/ --dry-run=client  -o yaml | oc replace --force -f -
+
+
+
+            oc process -f deployment-nopv.yaml -p VERSION=$VERSION -p DEPLOY_VERSION="${bamboo_deploy_version}" --param-file=config/"${bamboo_inject_ENV}"/"${bamboo_inject_TYPE}".env --param-file="${bamboo_inject_ENV}-param.env" --ignore-unknown-parameters | oc apply -f -
+
+
+            oc process -f service.yaml --param-file=config/"${bamboo_inject_ENV}"/"${bamboo_inject_TYPE}".env --param-file="${bamboo_inject_ENV}-param.env" --ignore-unknown-parameters| oc apply -f -
+
+
+            oc process -f routes.yaml  --param-file=config/"${bamboo_inject_ENV}"/"${bamboo_inject_TYPE}".env  --param-file="${bamboo_inject_ENV}-param.env" --ignore-unknown-parameters | oc apply -f -
+        working-dir: ${bamboo.resourceSize}
+        description: OCP Deploy resources
+  # com.atlassian.bamboo.plugins.scripttask:task.builder.script is disabled. This state is not supported at YAML
+  final-tasks:
+    - script:
+        interpreter: SHELL
+        scripts:
+          - |-
+            #!/bin/bash
+            oc logout
+        description: cleanup
+  variables:
+    env: dev
+    k8name: ocp_${bamboo.env}
+    resourceSize: small/non-prod
+  requirements:
+    - system.platform.azure: lin-dev
+  notifications: []
+
+---
+version: 2
+deployment:
+  name: TIAUTO-Pipeline
+deployment-permissions:
+  - users:
+      - raja.kethamreddy
+      - sugubalan.thangavel
+      - sammi.zhao
+      - naveen.koniki
+      - xv.rohan.arora
+    permissions:
+      - view
+      - edit
+  - groups:
+      - singtel-git-core-cloudops
+    roles:
+      - logged-in
+    permissions:
+      - view
+environment-permissions:
+  - DEV Blue Deployment:
+      - groups:
+          - singtel-git-core-cloudops
+        roles:
+          - logged-in
+        permissions:
+          - view
+      - users:
+          - raja.kethamreddy
+        permissions:
+          - view
+          - deploy
+
+...

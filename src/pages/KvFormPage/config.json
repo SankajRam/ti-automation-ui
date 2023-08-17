@@ -1,0 +1,17 @@
+{
+  "pageName": "kv",
+  "formLimit": 1,
+  "postFormRoute": "/save-resource/kv/",
+  "getKeysRoute" : "/rgkv/",
+  "formsData": {
+    "kvFormData": {
+      "name": "kv",
+      "fields": [
+        { "name": "name", "label": "Name", "type": "input" },
+        { "name": "resource_group_key", "label": "RG Key", "type": "combobox", "selectionList": [] },
+        { "name": "sku_name", "label": "SKU", "type": "select", "selectionList": ["standard", "premium"] }
+      ],
+      "submitRef": {}
+    }
+  }
+} 

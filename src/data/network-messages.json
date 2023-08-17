@@ -1,0 +1,6 @@
+{
+  "TIMEOUT_MSG": "Backend is unresponsive. Please try again later.",
+  "HTTP_STATUS_MSG": "ERROR: HTTP status ",
+  "UNEXPECTED_ERROR_MSG": "An unexpected error occurred",
+  "NO_CONN_MSG": "Could not establish connection to backend or it is unresponsive. Please try again later."
+}
